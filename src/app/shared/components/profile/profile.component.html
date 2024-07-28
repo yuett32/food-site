@@ -1,0 +1,34 @@
+<div class="image-container">
+    <app-navbar [isMain] = "true"></app-navbar>
+    <img src="assets/hero-bg.jpg" alt="Background Image">
+    <div class="form-overlay">
+        
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" style="margin-top: 8%;">
+            <h2>Update Your Profile</h2>
+            <div class="profile-picture-container">
+                <img [src]="profilePictureUrl || 'https://bootdey.com/img/Content/avatar/avatar6.png'" alt="Profile Picture" class="profile-picture">
+            </div>
+            <div>
+                <label for="name">First Name:</label>
+                <input id="name" formControlName="firstName" type="text">
+            </div>
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input id="lastName" formControlName="lastName" type="text">
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input id="email" formControlName="email" type="email">
+            </div>
+            <div>
+                <label for="mobileNumber">Mobile Number:</label>
+                <input id="mobileNumber" formControlName="mobileNumber" type="text">
+            </div>
+            <div>
+                <label for="bmi">BMI:</label>
+                <input id="bmi" formControlName="bmi" type="text">
+            </div>
+            <a class="order-now" (click)="onSubmit()"> Update  </a>
+        </form>
+    </div>
+</div>

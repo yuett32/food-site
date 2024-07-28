@@ -1,0 +1,41 @@
+<div class="image-container">
+    <img src="assets/hero-bg.jpg" alt="Background Image">
+    <div class="form-overlay">
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <h2>Create an Account</h2>
+        <div>
+          <label for="name">First Name:</label>
+          <input id="name" formControlName="firstName" type="text">
+        </div>
+        <div>
+            <label for="lastName">Last Name:</label>
+            <input id="lastName" formControlName="lastName" type="text">
+          </div>
+        <div>
+          <label for="email">Email:</label>
+          <input id="email" formControlName="email" type="email">
+        </div>
+        <div>
+          <label for="mobileNumber">Mobile Number:</label>
+          <input id="mobileNumber" formControlName="mobileNumber" type="text">
+        </div>
+        <div>
+            <label for="bmi">BMI:</label>
+            <input id="bmi" formControlName="bmi" type="text">
+          </div>
+          <div>
+            <label for="image">Profile Image:</label>
+            <input id="image" type="file" (change)="onFileSelected($event)" accept="image/*">
+          </div>
+        <div>
+          <label for="password">Password:</label>
+          <input id="password" formControlName="password" type="password">
+        </div>
+        <a class="order-now" (click)="onSubmit()"> Register </a>
+        <div class="link-container">
+          <a [routerLink]="['/login']" >Already have an Account?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  

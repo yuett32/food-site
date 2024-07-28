@@ -1,0 +1,39 @@
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;/* Semi-transparent background */
+    color: white;
+    padding: 0px 15px;
+    box-sizing: border-box;
+}
+.logo {
+    height: 100px !important;
+    width: 100px !important; /* Adjust the logo size as needed */
+}
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.nav ul li {
+    margin-right: 20px;
+}
+
+.nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+.navBar {
+    background: #373F41 !important;
+}

@@ -1,0 +1,93 @@
+/* .hero_area {
+    position: relative;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+
+  .bg-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .bg-box img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  } */
+  .bg-box {
+    position: relative;
+    display: inline-block; /* or other appropriate display property */
+  }
+  
+  .bg-box img {
+    width: 100%;
+    height: auto; /* Adjust as needed */
+  }
+  
+  .text-overlay {
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    color: white; /* or any color that contrasts with the image */
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    padding: 10px; /* Optional padding */
+    /* text-align: center; */
+    /* font-size: 24px;  */
+    /* Adjust as needed */
+  }
+  .bg-box h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .img-box-new {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 115px;
+    margin-top: 30px;
+    position: relative;
+  }
+  
+  .img-box-new img {
+    border-radius: 50%;
+    border: 5px solid #ffbe33;
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    object-fit: cover; /* Ensures the image covers the container */
+    position: relative;
+  }
+  
+  .img-box-new::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0px; /* Adjust as needed */
+    width: 20px;
+    height: 20px;
+    background-color: #ffbe33;
+    transform: rotate(45deg) translateX(-50%);
+  }
+  
+  
+  .order_online {
+    display: inline-block;
+    padding: 6px 30px;
+    background-color: #ffbe33;
+    color: #ffffff;
+    border-radius: 45px;
+    transition: all 0.3s;
+    border: none;
+  }

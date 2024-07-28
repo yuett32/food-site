@@ -1,0 +1,21 @@
+<div class="image-container">
+    <img src="assets/hero-bg.jpg" alt="Background Image">
+    <div class="form-overlay">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2>Login Here</h2>
+        <div>
+          <label for="email">Email:</label>
+          <input id="email" formControlName="email" type="email">
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input id="password" formControlName="password" type="password">
+        </div>
+        <a class="order-now"> Login </a>
+        <div class="link-container">
+          <a [routerLink]="['/register']">Create an Account?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  

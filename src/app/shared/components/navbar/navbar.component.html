@@ -1,0 +1,25 @@
+<header class="header" [ngClass]="{'navBar': !isMain}">
+<img src="assets/logo.png" alt="Logo" class="logo" />
+<nav class="nav">
+    <ul>
+      <li><a [routerLink]="['/home']">Home</a></li>
+      <li><a [routerLink]="['/home/menu']">Menu</a></li>
+      <li><a [routerLink]="['/home/about']">About</a></li>
+      <li><a [routerLink]="['/home/contact']">Contact Us</a></li>
+      <li><a [routerLink]="['/home/booktable']">Book a Table</a></li>
+      <li>
+        <a href="" class="user_link" [routerLink]="['/home/profile']">
+          <i class="fa fa-user" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a class="cart_link" [routerLink]="['/home/cart']">
+          Cart
+        </a>
+      </li>
+      <li>
+        <a class="order_online"> Order Online </a>
+      </li>
+    </ul>
+  </nav>
+</header>
