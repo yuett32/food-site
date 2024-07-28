@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-booktable',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./booktable.component.css']
 })
 export class BooktableComponent {
-
+  @Input() isMain = false
 }

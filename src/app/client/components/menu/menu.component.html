@@ -1,4 +1,6 @@
-<app-navbar></app-navbar>
+<ng-container *ngIf="!isMain">
+  <app-navbar></app-navbar>
+</ng-container>
 <section class="food_section layout_padding-bottom">
     <div class="container">
       <div class="heading_container heading_center">
@@ -124,5 +126,6 @@
       </div>
     </div>
   </section>
-
+<ng-container *ngIf="!isMain">
   <app-footer></app-footer>
+</ng-container>
