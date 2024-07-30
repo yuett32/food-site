@@ -1,3 +1,18 @@
 .food_section {
     margin-top: 10%;
 }
+.search-container {
+    display: flex;
+    justify-content: center; /* Center the container horizontally */
+    width: 100%; /* Make the container full width */
+  }
+  
+  .search-container input {
+    width: 40%; /* Set the width of the input to 50% */
+    max-width: 600px; /* Optional: set a maximum width to avoid very wide inputs on large screens */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  

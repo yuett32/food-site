@@ -7,6 +7,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { SearchPipe } from './pipe/search.pipe';
 
 
 
@@ -16,7 +18,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     RegisterComponent,
     FooterComponent,
     NavbarComponent,
-    ProfileComponent
+    ProfileComponent,
+    ModalComponent,
+    SearchPipe,
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,9 @@ import { ProfileComponent } from './components/profile/profile.component';
   exports:[
     FooterComponent,
     NavbarComponent,
-    ProfileComponent
+    ProfileComponent,
+    ModalComponent,
+    SearchPipe
   ]
 })
 export class SharedModule { }

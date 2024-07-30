@@ -503,6 +503,7 @@ a:focus {
 }
 
 .food_section .box {
+  height: 100%;
   position: relative;
   margin-top: 25px;
   background-color: #ffffff;
@@ -511,6 +512,9 @@ a:focus {
   border-radius: 15px;
   overflow: hidden;
   background: linear-gradient(to bottom, #f1f2f3 25px, #222831 25px);
+}
+.food_section .pizza {
+  margin-top: 20px;
 }
 
 .food_section .box .img-box {

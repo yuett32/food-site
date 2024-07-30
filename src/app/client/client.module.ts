@@ -8,6 +8,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { BooktableComponent } from './components/booktable/booktable.component';
 import { SharedModule } from '../shared/shared.module';
 import { CartComponent } from './components/cart/cart.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CartComponent } from './components/cart/cart.component';
   imports: [
     CommonModule,
     ClientRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class ClientModule { }

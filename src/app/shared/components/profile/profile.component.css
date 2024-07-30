@@ -9,8 +9,12 @@
     width: 100%;
     height: auto;
 }
-
+.image-container {
+    background: black;
+}
 .form-overlay {
+    background: black !important;
+    margin-top: 7%;
     position: absolute;
     top: 0;
     left: 0;

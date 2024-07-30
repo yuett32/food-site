@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h5 class="modal-title">Add Product</h5>
+  </div>
+  <div class="modal-body">
+    <div class="image-container">
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="profile-form">
+        <div class="profile-picture-container">
+          <img
+            [src]="selectedFileUrl || downloadURL || 'https://bootdey.com/img/Content/avatar/avatar6.png'"
+            alt="Profile Picture"
+            class="profile-picture"
+            (click)="updatePicture()"
+          />
+        </div>
+        <input type="file" (change)="onFileSelected($event)" #fileInput style="display: none;"/>
+        <div class="form-group">
+          <label for="name">Product Title:</label>
+          <input id="name" formControlName="productTitle" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Price:</label>
+          <input id="lastName" formControlName="price" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="email">Calories:</label>
+          <input id="email" formControlName="calories" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="mobileNumber">Product Description:</label>
+          <textarea name="description" formControlName="description" rows="4" class="form-control"></textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" form="signUpForm" class="order-now" (click)="onSubmit()">Update</button>
+    <button type="button" class="btn btn-secondary order-now closeBtn" (click)="onClose()">Close</button>
+  </div>
+  

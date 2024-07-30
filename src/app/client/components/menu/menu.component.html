@@ -6,7 +6,6 @@
       <div class="heading_container heading_center">
         <h2>Our Menu</h2>
       </div>
-  
       <ul class="filters_menu">
         <li
           [ngClass]="{ active: filter == 'all' }"
@@ -39,26 +38,33 @@
           Fries
         </li>
       </ul>
-  
+      <div class="search-container">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Search for food..."
+          [(ngModel)]="searchQuery"
+        />
+      </div>
       <div class="filters-content">
         <div class="row grid">
-          <ng-container *ngFor="let item of foodItem">
+          <ng-container *ngFor="let item of foodItem | search:searchQuery">
             <div class="col-sm-6 col-lg-4 all pizza">
               <div class="box">
                 <div>
                   <div class="img-box">
-                    <img [src]="item.img" alt="" />
+                    <img [src]="item.productImage" alt="" />
                   </div>
                   <div class="detail-box">
                     <h5>
-                      {{ item.title }}
+                      {{ item.productTitle }}
                     </h5>
                     <p>
                       {{ item.description }}
                     </p>
                     <div class="options">
                       <h6>${{ item.price }}</h6>
-                      <a>
+                      <a (click)="addToCart(item)">
                         <svg
                           version="1.1"
                           id="Capa_1"

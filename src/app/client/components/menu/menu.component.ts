@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { MainService } from 'src/app/shared/services/main.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,87 +10,34 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit{
   @Input() isMain = false;
   filter : any = 'all';
-  allfoodItem : any = [
-
-    {
-    id:0,
-    title: 'Delicious Pizza',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '20',
-    img: 'assets/f1.png',
-    categories: 'pizza'
-    },
-    {
-    id:0,
-    title: 'Delicious Burger',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '15',
-    img: 'assets/f2.png',
-    categories: 'burger'
-    },
-    {
-    id:0,
-    title: 'Delicious Burger',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '15',
-    img: 'assets/f8.png',
-    categories: 'burger'
-    },
-    {
-    id:0,
-    title: 'Delicious Burger',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '15',
-    img: 'assets/f7.png',
-    categories: 'burger'
-    },
-    {
-    id:0,
-    title: 'Delicious Pizza',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '20',
-    img: 'assets/f3.png',
-    categories: 'pizza'
-    },
-    {
-    id:0,
-    title: 'Delicious Pasta',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '20',
-    img: 'assets/f4.png',
-    categories: 'pasta'
-    },
-    {
-    id:0,
-    title: 'French Fries',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '20',
-    img: 'assets/f5.png',
-    categories: 'fries'
-    },
-    {
-    id:0,
-    title: 'Delicious Pasta',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '20',
-    img: 'assets/f6.png',
-    categories: 'pasta'
-    },
-    {
-    id:0,
-    title: 'Delicious Pasta',
-    description : ' Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque.',
-    price: '20',
-    img: 'assets/f9.png',
-    categories: 'pasta'
-    },
-  ]
-  foodItem:any = []
-  constructor() {}
+  searchQuery = '';
+  allfoodItem : any = []
+  foodItem:any = [];
+  cartItemCount : any = 0
+  userId: any
+  constructor(private mainService : MainService,private toastr: ToastrService) {
+    this.userId = localStorage.getItem('user_id')
+  }
   ngOnInit(): void {
-    this.foodItem = this.allfoodItem;
+    this.getAllProducts()
   }
   filterItem(){
-    this.foodItem = this.allfoodItem.filter((item:any) => item.categories == this.filter)
+    // this.foodItem = this.allfoodItem.filter((item:any) => item.categories == this.filter)
+  }
+  addToCart(item:any) {
+
+    let payload = {
+      ...item
+    }
+    payload.userId = this.userId;
+    payload.orderDate = new Date();
+    payload.quantity = 1;
+    this.mainService.getAllItems(this.userId,payload);
+  }
+  getAllProducts() {
+    this.mainService.getAllProducts().subscribe((res:any) =>{
+      console.log(res)
+      this.foodItem = res;
+    })
   }
 }

@@ -5,66 +5,52 @@
             <div class="title">
                 <div class="row">
                     <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                    <div class="col align-self-center text-right text-muted">3 items</div>
+                    <div class="col align-self-center text-right text-muted">{{cartItems.length}} items</div>
                 </div>
             </div>    
-            <div class="row border-top border-bottom">
+            <ng-container *ngFor="let item of cartItems;let i=index;">
+            <div class="row border-bottom" [ngClass]="{'border-top':i==0}">
+                
+                
                 <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
+                    <div class="col-2"><img class="img-fluid" [src]="item.productImage"></div>
                     <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
+                        <!-- <div class="row text-muted">Shirt</div> -->
+                        <div class="row">{{item.productTitle}}</div>
                     </div>
                     <div class="col">
-                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                        <a (click)="changeQuantity(0,item)" [ngClass]="{'disabled':item?.quatity == 1}">-</a><a class="border">{{item.quantity}}</a><a (click)="changeQuantity(1,item)">+</a>
                     </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                    <div class="col">&dollar; {{item.price}} <span class="close">&#10005;</span></div>
+                    <div class="col">&dollar; {{calculatTotal(item)}}</div>
+                    <div class="col" style="text-align: end;"><span class="close" style="cursor: pointer;" (click)="deleteItem(item)">&#10005;</span></div>
                 </div>
+            
             </div>
-            <div class="row">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg"></div>
-                    <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
-                    </div>
-                    <div class="col">
-                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                    </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                </div>
+        </ng-container>
+        <ng-container *ngIf="cartItems.length == 0">
+            <div class="row main align-items-center">
+                <p>There is no item added in the cart.</p>
             </div>
-            <div class="row border-top border-bottom">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg"></div>
-                    <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
-                    </div>
-                    <div class="col">
-                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                    </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                </div>
-            </div>
-            <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+        </ng-container>
+        
+            <div class="back-to-shop"><a routerLink="/home/menu">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
         </div>
         <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
             <hr>
             <div class="row">
-                <div class="col" style="padding-left:0;">ITEMS 3</div>
-                <div class="col text-right">&euro; 132.00</div>
+                <div class="col" style="padding-left:0;">ITEMS {{cartItems.length}}</div>
+                <div class="col text-right">&dollar; {{totalAmount}}</div>
             </div>
             <form>
-                <p>SHIPPING</p>
-                <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
-                <p>GIVE CODE</p>
-                <input id="code" placeholder="Enter your code">
+                <select><option class="text-muted">Standard-Delivery- &dollar;5.00</option></select>
+                <p>Enter your Address Here:</p>
+                <input id="code" placeholder="Enter your Address">
             </form>
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">&euro; 137.00</div>
+                <div class="col text-right">&dollar; {{totalAmount ? (totalAmount + 5) : 0}}</div>
             </div>
             <button class="btn">CHECKOUT</button>
         </div>

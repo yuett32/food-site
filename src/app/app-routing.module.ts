@@ -8,6 +8,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'home', loadChildren:()=>import('./client/client.module').then(m=>m.ClientModule)},
+  {path: 'admin', loadChildren:()=>import('./admin/admin.module').then(m=>m.AdminModule)},
 
 ];
 

@@ -1,0 +1,72 @@
+.food_section {
+    margin-top: 10%;
+}
+.search-container {
+    display: flex;
+    justify-content: center; /* Center the container horizontally */
+    width: 100%; /* Make the container full width */
+  }
+  
+  .search-container input {
+    width: 40%; /* Set the width of the input to 50% */
+    max-width: 600px; /* Optional: set a maximum width to avoid very wide inputs on large screens */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  .food_section .box .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .food_section .box .options .price {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .food_section .box .options .icons {
+    display: flex;
+    gap: 10px; /* Spacing between icons */
+  }
+  
+  .food_section .box .options a {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .food_section .box .options a svg {
+    width: 18px;
+    height: auto;
+    fill: #ffffff;
+  }
+  .delete-icon{
+    background: #fd6b6b !important;
+  }
+  .edit-icon{
+    background: #5ea0f5 !important;
+  }
+
+  .newBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background: #ffbe33;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .order-now {
+    text-align: center;
+  }

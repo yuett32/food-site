@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +11,44 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
+  errorMessage = '';
+  constructor(private fb: FormBuilder,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore,private route: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
+
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+    this.errorMessage = '';
+    this.angularFireAuth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
+      .then((userCredential:any) => {
+        // Access the user's account type from Firestore
+        this.firestore.collection('users').doc(userCredential.user.uid).get()
+          .subscribe((doc:any) => {
+            if (doc.exists) {
+              const accountType = doc.data().accountType;
+              localStorage.setItem('authToken', userCredential.user.getIdToken());
+              localStorage.setItem('user_id', userCredential.user.uid);
+              
+              localStorage.setItem('accountType', accountType);
+              if (accountType == 1) {
+                this.route.navigate(['/admin']);
+              } else {
+                this.route.navigate(['/home']);
+              }
+            } else {
+              console.log('User document does not exist');
+              // Handle error here, e.g., show an error message to the user
+            }
+          });
+      })
+      .catch((error) => {
+        this.errorMessage = 'Your provided Credentials are Wrong or Something went wrong'
+        // Handle error here, e.g., show an error message to the user
+      });
     }
   }
 }
