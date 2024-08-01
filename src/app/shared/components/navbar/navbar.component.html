@@ -1,4 +1,4 @@
-<header class="header" [ngClass]="{ navBar: !isMain }">
+<header class="header navBar">
   <img src="assets/logo.png" alt="Logo" class="logo" />
   <nav class="nav">
     <ul>
@@ -18,16 +18,15 @@
             <span class="cart-count">{{ cartItemCount }}</span>
           </a>
         </li>
-        
-        <li>
-          <a class="order_online"> Order Online </a>
-        </li>
       </ng-container>
       <ng-container *ngIf="isAdmin">
         <li><a [routerLink]="['/admin/home']">Admin Dashboard</a></li>
         <li><a [routerLink]="['/admin/product']">All Products</a></li>
         <li><a [routerLink]="['/admin/user']">Users</a></li>
       </ng-container>
+      <li>
+        <a (click)="logout()"> Logout</a>
+      </li>
     </ul>
   </nav>
 </header>

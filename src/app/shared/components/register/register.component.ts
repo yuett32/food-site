@@ -5,6 +5,7 @@ import { finalize } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,7 +15,7 @@ export class RegisterComponent {
   signUpForm: FormGroup;
   selectedFile: File | null = null;
   downloadURL: string | null = null;
-  constructor(private route: Router, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore) {
+  constructor(private route: Router, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore, private toastr: ToastrService) {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -35,7 +36,7 @@ export class RegisterComponent {
     this.selectedFile = event.target.files[0] as File;
   }
   onSubmit(): void {
-    if (this.selectedFile) {
+    if (this.signUpForm.valid && this.selectedFile) {
       const filePath = `profile_images/${Date.now()}_${this.selectedFile.name}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, this.selectedFile);
@@ -50,7 +51,7 @@ export class RegisterComponent {
         })
       ).subscribe();
     } else {
-      this.submitForm();
+      this.toastr.info('Please Enter all the data first.')
     }
   }
 

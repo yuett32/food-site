@@ -5,10 +5,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProductComponent } from './components/products/product.component';
 
 const routes: Routes = [
-  {path : '', redirectTo:'home', pathMatch:'full'},
-  {path : 'home', component: DashboardComponent},
+  {path : '', component: DashboardComponent},
   {path : 'product', component: MainComponent},
-  {path:'user',component: MainComponent }
+  {path:'user',component: MainComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

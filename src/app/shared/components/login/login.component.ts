@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage = '';
-  constructor(private fb: FormBuilder,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore,private route: Router) {
+  constructor(private fb: FormBuilder,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore,private route: Router,private toastr: ToastrService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -46,9 +47,13 @@ export class LoginComponent {
           });
       })
       .catch((error) => {
+        this.toastr.error('Your Credentials are incorrect!, try again')
         this.errorMessage = 'Your provided Credentials are Wrong or Something went wrong'
         // Handle error here, e.g., show an error message to the user
       });
+    }
+    else {
+      this.toastr.info('Please Enter your crendentials first.')
     }
   }
 }

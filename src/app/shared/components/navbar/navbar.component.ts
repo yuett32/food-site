@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ export class NavbarComponent implements OnInit {
   @Input() isAdmin: boolean = false
   @Input() cartItemCount = 0;
   userId:any;
-  constructor(private mainService : MainService) {
+  constructor(private mainService : MainService,private route: Router) {
     this.userId = localStorage.getItem('user_id');
   }
   ngOnInit(): void {
@@ -25,5 +26,11 @@ export class NavbarComponent implements OnInit {
         this.cartItemCount = res.length 
       }
     })
+  }
+  logout() {
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('accountType');
+    this.route.navigate(['/login'])
   }
 }

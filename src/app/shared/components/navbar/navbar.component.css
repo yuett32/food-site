@@ -35,7 +35,7 @@
     font-size: 18px;
 }
 .navBar {
-    background: #373F41 !important;
+    background: radial-gradient(black, transparent);
 }
 .cart-container {
     position: relative;
