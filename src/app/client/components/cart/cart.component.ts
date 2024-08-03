@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { MainService } from 'src/app/shared/services/main.service';
 
 @Component({
@@ -8,8 +10,9 @@ import { MainService } from 'src/app/shared/services/main.service';
 })
 export class CartComponent implements OnInit{
   cartItems:any = [];
-  totalAmount:any
-  constructor(private mainService: MainService){}
+  totalAmount:any;
+  location:any;
+  constructor(private mainService: MainService,private route:Router, private toastr: ToastrService){}
   ngOnInit(): void {
     this.getAllItems()
   }
@@ -59,5 +62,13 @@ export class CartComponent implements OnInit{
   
     return price * quantity;
   }
-  
+  checkout(){
+    if (this.location) {
+      localStorage.setItem('location',this.location);
+      this.route.navigateByUrl('/home/checkout')
+    }
+    else {
+      this.toastr.info('Please enter the location first.')
+    }
+  }
 }

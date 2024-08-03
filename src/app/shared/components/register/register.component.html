@@ -1,7 +1,11 @@
 <div class="image-container">
     <img src="assets/hero-bg.jpg" alt="Background Image">
     <div class="form-overlay">
-      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="accountType == 2 ? employeeForm : clientForm">
+        <div class="text-center mt-3">
+          <button class="btn btn-light" [ngStyle]="{'background': accountType == 3? '#FFBE33':''}" (click)="accountType = 3">Client</button>
+          <button class="btn btn-light" style="margin-left: 5px;" [ngStyle]="{'background': accountType == 2? '#FFBE33':''}" (click)="accountType = 2" >Delivery Boy</button>
+        </div>
         <h2>Create an Account</h2>
         <div>
           <label for="name">First Name:</label>
@@ -19,7 +23,7 @@
           <label for="mobileNumber">Mobile Number:</label>
           <input id="mobileNumber" formControlName="mobileNumber" type="text">
         </div>
-        <div>
+        <div *ngIf="accountType == 3">
             <label for="bmi">BMI:</label>
             <input id="bmi" formControlName="bmi" type="text">
           </div>

@@ -1,0 +1,13 @@
+<div class="payment-container">
+  <form (submit)="pay()">
+    <div class="form-group">
+      <h5>Total Amount: {{ totalAmount }}</h5>
+    </div>
+    <div class="form-group">
+      <div id="card-element"><!-- Stripe.js will inject the card element here --></div>
+    </div>
+    <div class="form-group">
+      <button type="submit">Pay</button>
+    </div>
+  </form>
+</div>

@@ -6,38 +6,6 @@
       <div class="heading_container heading_center">
         <h2>Our Menu</h2>
       </div>
-      <ul class="filters_menu">
-        <li
-          [ngClass]="{ active: filter == 'all' }"
-          (click)="this.foodItem = this.allfoodItem"
-        >
-          All
-        </li>
-        <li
-          [ngClass]="{ active: filter == 'burger' }"
-          (click)="filter = 'burger'; filterItem()"
-        >
-          Burger
-        </li>
-        <li
-          [ngClass]="{ active: filter == 'pizza' }"
-          (click)="filter = 'pizza'; filterItem()"
-        >
-          Pizza
-        </li>
-        <li
-          [ngClass]="{ active: filter == 'pasta' }"
-          (click)="filter = 'pasta'; filterItem()"
-        >
-          Pasta
-        </li>
-        <li
-          [ngClass]="{ active: filter == 'fries' }"
-          (click)="filter = 'fries'; filterItem()"
-        >
-          Fries
-        </li>
-      </ul>
       <div class="search-container">
         <input
           class="form-control"
@@ -48,7 +16,7 @@
       </div>
       <div class="filters-content">
         <div class="row grid">
-          <ng-container *ngFor="let item of foodItem | search:searchQuery">
+          <ng-container *ngFor="let item of (isMain ? (foodItem | slice:0:3) : foodItem ) | search:searchQuery">
             <div class="col-sm-6 col-lg-4 all pizza">
               <div class="box">
                 <div>
@@ -62,6 +30,7 @@
                     <p>
                       {{ item.description }}
                     </p>
+                    <h6> <strong>Calories : {{ item.calories }}</strong></h6>
                     <div class="options">
                       <h6>${{ item.price }}</h6>
                       <a (click)="addToCart(item)">
@@ -127,8 +96,8 @@
           </ng-container>
         </div>
       </div>
-      <div class="btn-box">
-        <a> View More </a>
+      <div class="btn-box" *ngIf="isMain">
+        <a routerLink="/home/menu"> View More </a>
       </div>
     </div>
   </section>

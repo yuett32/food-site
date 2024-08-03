@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { MainService } from '../../services/main.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modal',
@@ -9,9 +10,10 @@ import { MainService } from '../../services/main.service';
 })
 export class ModalComponent {
   itemId:any
-  constructor(public bsModalRef: BsModalRef,private mainService: MainService){}
+  constructor(public bsModalRef: BsModalRef,private mainService: MainService, private toastr: ToastrService){}
   onDelete(){
-    this.mainService.deleteProduct(this.itemId)
+    this.mainService.deleteProduct(this.itemId);
+    this.toastr.success('This item is deleted Successfully.')
     this.onClose()
 
   }

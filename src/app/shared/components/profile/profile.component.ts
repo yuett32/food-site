@@ -1,33 +1,112 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MainService } from '../../services/main.service';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
-  signUpForm: FormGroup;
+export class ProfileComponent implements OnInit{
+  profileForm: FormGroup;
   selectedFile: File | null = null;
   downloadURL: string | null = null;
   profilePictureUrl : any;
-  constructor(private route: Router, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore) {
-    this.signUpForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      mobileNumber: ['', Validators.required],
+  userInfo:any = {};
+  user_id:any;
+  selectedFileUrl: any;
+  constructor(private route: Router,private toastr:ToastrService,private cdr: ChangeDetectorRef, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,private mainService: MainService) {
+    this.profileForm = this.fb.group({
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      mobile_number: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       bmi: ['', Validators.required],
-      password: ['', Validators.required]
     });
   }
+  ngOnInit(): void {
+    this.user_id = localStorage.getItem('user_id');
+    this.getUserInfo();
+  }
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0] as File;
+    let file = event.target.files[0] as File;
+
+    this.selectedFile = file;
+      this.selectedFileUrl = window.URL.createObjectURL(file);
+      this.cdr.detectChanges(); // Manually trigger change detection
   }
 
-  onSubmit() {}
+  getUserInfo(){
+    this.mainService.getUserInfo(this.user_id).subscribe((res:any)=>{
+      this.userInfo = res
+      this.profileForm.patchValue(res);
+      this.downloadURL = res.photoURL;
+    })
+  }
+
+  onSubmit(): void {
+    if (this.selectedFile && this.profileForm.valid) {
+      const filePath = `products/${Date.now()}_${this.selectedFile.name}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, this.selectedFile);
+
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(url => {
+            this.downloadURL = url;
+            // Now you can submit the form data along with the image URL
+            this.submitForm();
+          });
+        })
+      ).subscribe();
+    } else {
+      if (this.downloadURL && this.profileForm.valid) 
+        this.submitForm();
+      else
+        this.toastr.error(this.profileForm.invalid ? 'Please add the data in the field.':'Please select picture of the product first.')
+    }
+  }
+
+  submitForm(): void {
+    const formData = this.profileForm.value;
+    formData.photoURL = this.downloadURL || null;
+    this.updateProfile(formData)
+    // Handle the form submission, e.g., send data to the server
+    console.log('Form data:', formData);
+  }
+
+  updateProfile(formData:any) {
+  
+  // const lesson = {
+  //   // productTitle: formData.productTitle,
+  //   // price: formData.price,
+  //   // description: formData.description,
+  //   // calories: formData.calories,
+  //   // productImage: formData.productImage,
+  //   // date: new Date(),
+  //   photoURL
+  // };
+  const userData = {
+    email: formData.email,
+    displayName: formData.first_name + ' ' + formData.last_name,
+    first_name: formData.first_name,
+    last_name: formData.last_name,
+    mobile_number: formData.mobile_number, 
+    bmi: formData.bmi, 
+    photoURL: formData.photoURL,
+  };
+  if (this.userInfo.id) {
+    this.mainService.updateProfile(this.userInfo.id,userData);
+    this.toastr.success('Profile data updated Successfully.')
+  }
+  this.route.navigateByUrl('/home')
+  
 }
+}
+

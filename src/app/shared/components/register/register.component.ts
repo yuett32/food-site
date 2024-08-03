@@ -12,11 +12,23 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  signUpForm: FormGroup;
+  clientForm: FormGroup;
+  employeeForm: FormGroup;
   selectedFile: File | null = null;
   downloadURL: string | null = null;
+  accountType:any = 3;
+
+  
   constructor(private route: Router, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore, private toastr: ToastrService) {
-    this.signUpForm = this.fb.group({
+    this.clientForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      mobileNumber: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      bmi: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+    this.employeeForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       mobileNumber: ['', Validators.required],
@@ -26,17 +38,11 @@ export class RegisterComponent {
     });
   }
 
-  onSubmit1() {
-    if (this.signUpForm.valid) {
-      console.log(this.signUpForm.value);
-    }
-  }
-
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] as File;
   }
   onSubmit(): void {
-    if (this.signUpForm.valid && this.selectedFile) {
+    if (this.selectedFile && (this.accountType == 2 ? this.employeeForm.valid : this.clientForm.valid)) {
       const filePath = `profile_images/${Date.now()}_${this.selectedFile.name}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, this.selectedFile);
@@ -56,7 +62,7 @@ export class RegisterComponent {
   }
 
   submitForm(imageUrl?: string): void {
-    const formData = this.signUpForm.value;
+    const formData = this.accountType == 2 ? this.employeeForm.value : this.clientForm.value
     formData.imageUrl = imageUrl || null;
     this.SignUp(formData)
     // Handle the form submission, e.g., send data to the server
@@ -66,9 +72,13 @@ export class RegisterComponent {
 
   SignUp(formData:any) {
     this.angularFireAuth
-     .createUserWithEmailAndPassword(this.signUpForm.value.email, this.signUpForm.value.password)
+     .createUserWithEmailAndPassword(this.accountType == 2 ? this.employeeForm.value.email : this.clientForm.value.email,this.accountType == 2 ? this.employeeForm.value.password : this.clientForm.value.password)
      .then((result) => {
        this.SetUserData(result.user,formData);
+       if (this.accountType == 2) {
+        this.toastr.success('Congratulatios you are regitered Successfully, please ask admin to approve your account.')
+       }
+       else this.toastr.success('Congratulatios you are regitered Successfully, please logid in.')
        this.route.navigate(['/login'])
      })
      .catch((error) => {
@@ -86,10 +96,11 @@ export class RegisterComponent {
      first_name: formData.firstName,
      last_name: formData.lastName,
      mobile_number: formData.mobileNumber, 
-     bmi: formData.bmi, 
+     bmi: this.accountType == 3 ? formData.bmi : 0, 
      photoURL: formData.imageUrl,
      emailVerified: user.emailVerified,
-     accountType: 2
+     accountType: this.accountType,
+     accountActivated: this.accountType == 3 ? true : false, 
    };
    return userRef.set(userData, {
      merge: true,

@@ -5,6 +5,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { MainService } from 'src/app/shared/services/main.service';
 
@@ -22,7 +23,7 @@ export class ProductComponent implements OnInit{
   formData:any
   @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private route: Router, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,
-    private firestore: AngularFirestore,public bsModalRef: BsModalRef, private mainService: MainService,
+    private toastr: ToastrService,public bsModalRef: BsModalRef, private mainService: MainService,
     private cdr: ChangeDetectorRef) {
     this.productForm = this.fb.group({
       productTitle: ['', Validators.required],
@@ -39,7 +40,6 @@ export class ProductComponent implements OnInit{
   }
   onFileSelected(event: any): void {
     let file = event.target.files[0] as File;
-
     this.selectedFile = file;
       this.selectedFileUrl = window.URL.createObjectURL(file);
       this.cdr.detectChanges(); // Manually trigger change detection
@@ -51,7 +51,7 @@ export class ProductComponent implements OnInit{
     this.fileInput.nativeElement.click();
   }
   onSubmit(): void {
-    if (this.selectedFile) {
+    if (this.selectedFile && this.productForm.valid) {
       const filePath = `products/${Date.now()}_${this.selectedFile.name}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, this.selectedFile);
@@ -66,7 +66,10 @@ export class ProductComponent implements OnInit{
         })
       ).subscribe();
     } else {
-      this.submitForm();
+      if (this.downloadURL && this.productForm.valid) 
+        this.submitForm();
+      else
+        this.toastr.error(this.productForm.invalid ? 'Please add the data in the field.':'Please select picture of the product first.')
     }
   }
 
@@ -88,10 +91,14 @@ export class ProductComponent implements OnInit{
     productImage: formData.productImage,
     date: new Date(),
   };
-  if (this.formData.id) {
+  if (this.formData?.id) {
     this.mainService.updateProduct(this.formData.id,lesson);
+    this.toastr.success('Product is updated Successfully.')
   }
-  else this.mainService.addProduct(lesson);
+  else {
+    this.mainService.addProduct(lesson);
+    this.toastr.success('Product is added Successfully.')
+  }
   this.cancel()
   
 }

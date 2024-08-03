@@ -33,7 +33,7 @@ export class LoginComponent {
               const accountType = doc.data().accountType;
               localStorage.setItem('authToken', userCredential.user.getIdToken());
               localStorage.setItem('user_id', userCredential.user.uid);
-              
+              this.toastr.success('Logged in Successfully.')
               localStorage.setItem('accountType', accountType);
               if (accountType == 1) {
                 this.route.navigate(['/admin']);

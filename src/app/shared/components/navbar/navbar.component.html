@@ -6,7 +6,6 @@
         <li><a [routerLink]="['/home']">Home</a></li>
         <li><a [routerLink]="['/home/menu']">Menu</a></li>
         <li><a [routerLink]="['/home/about']">About</a></li>
-        <li><a [routerLink]="['/home/contact']">Contact Us</a></li>
         <li>
           <a href="" class="user_link" [routerLink]="['/home/profile']">
             <i class="fa fa-user" aria-hidden="true"></i>
@@ -22,7 +21,7 @@
       <ng-container *ngIf="isAdmin">
         <li><a [routerLink]="['/admin/home']">Admin Dashboard</a></li>
         <li><a [routerLink]="['/admin/product']">All Products</a></li>
-        <li><a [routerLink]="['/admin/user']">Users</a></li>
+        <li><a [routerLink]="['/admin/employee']">Manage Employee</a></li>
       </ng-container>
       <li>
         <a (click)="logout()"> Logout</a>

@@ -9,6 +9,9 @@ import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SearchPipe } from './pipe/search.pipe';
+import { PaymentComponent } from './components/payment/payment.component';
+import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -21,19 +24,23 @@ import { SearchPipe } from './pipe/search.pipe';
     ProfileComponent,
     ModalComponent,
     SearchPipe,
+    PaymentComponent,
+    StripeCheckoutComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule  
+    RouterModule,
+    HttpClientModule  
   ],
   exports:[
     FooterComponent,
     NavbarComponent,
     ProfileComponent,
     ModalComponent,
-    SearchPipe
+    SearchPipe,
+    PaymentComponent
   ]
 })
 export class SharedModule { }

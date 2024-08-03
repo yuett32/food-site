@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ToastrService } from 'ngx-toastr';
-import { map, Observable, of } from 'rxjs';
+import { forkJoin, from, map, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +54,7 @@ export class MainService {
   }
 
   getAllOrders(): Observable<any[]> {
-    return this.firestore.collection('cart').snapshotChanges().pipe(
+    return this.firestore.collection('orders').snapshotChanges().pipe(
       map(actions => actions.map(action => {
         const data = action.payload.doc.data() as any; // Ensure data is cast as 'any'
         const id = action.payload.doc.id;
@@ -70,6 +70,41 @@ getAllCartItems(userId: string): Observable<any[]> {
         const docId = action.payload.doc.id;
         return { docId, ...data }; // Combine id with document data
       }))
+    );
+  }
+
+  getUserInfo(userId: string): Observable<any> {
+    return this.firestore.collection('users').doc(userId).snapshotChanges().pipe(
+      map(doc => {
+        const data = doc.payload.data();
+        return data ? { id : doc.payload.id, ...data } : { id : doc.payload.id };
+      })
+    );
+  }
+
+  getAllCartItemsWithName(userId: string): Observable<any[]> {
+    return this.firestore.collection('cart', ref => ref.where('userId', '==', userId)).snapshotChanges().pipe(
+      map(actions => actions.map(action => {
+        const data = action.payload.doc.data() as any;
+        const docId = action.payload.doc.id;
+        return { docId, ...data };
+      })),
+      switchMap((cartItems:any) => {
+        if (cartItems.length === 0) {
+          return [cartItems];
+        }
+
+        return forkJoin(
+          cartItems.map((item:any) => 
+            this.firestore.collection('users').doc(userId).valueChanges().pipe(
+              map(user => {
+                item.displayName = (user as any).displayName;
+                return item;
+              })
+            )
+          )
+        );
+      })
     );
   }
 
@@ -112,5 +147,38 @@ deleteItem(itemId: string) {
       console.error('cart deleting product: ', error);
     });
 }
-  
+placeOrder(addData: any) {
+  return this.firestore.collection('orders').add(addData)
+  .then(() => {
+    console.log('Order added successfully');
+    return true
+  })
+  .catch((error) => {
+    console.error('Error adding Order: ', error);
+    return false;
+  });
+}
+
+deleteAllCartItems(id: string) {
+  return this.firestore.collection('cart', ref => ref.where('id', '==', id))
+    .get()
+    .pipe(
+      switchMap(snapshot => {
+        const batch = this.firestore.firestore.batch();
+        snapshot.docs.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        return from(batch.commit());
+      })
+    );
+}
+updateProfile(userId: string, updatedData: any) {
+  return this.firestore.collection('users').doc(userId).update(updatedData)
+    .then(() => {
+      console.log('Profile updated successfully');
+    })
+    .catch((error) => {
+      console.error('Error updating Profile: ', error);
+    });
+}
 }

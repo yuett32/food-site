@@ -6,38 +6,6 @@
         <div class="heading_container heading_center">
           <h2>Our Menu</h2>
         </div>
-        <!-- <ul class="filters_menu">
-          <li
-            [ngClass]="{ active: filter == 'all' }"
-            (click)="this.foodItem = this.allfoodItem"
-          >
-            All
-          </li>
-          <li
-            [ngClass]="{ active: filter == 'burger' }"
-            (click)="filter = 'burger'; filterItem()"
-          >
-            Burger
-          </li>
-          <li
-            [ngClass]="{ active: filter == 'pizza' }"
-            (click)="filter = 'pizza'; filterItem()"
-          >
-            Pizza
-          </li>
-          <li
-            [ngClass]="{ active: filter == 'pasta' }"
-            (click)="filter = 'pasta'; filterItem()"
-          >
-            Pasta
-          </li>
-          <li
-            [ngClass]="{ active: filter == 'fries' }"
-            (click)="filter = 'fries'; filterItem()"
-          >
-            Fries
-          </li>
-        </ul> -->
         <div class="search-container">
           <input
             class="form-control"
@@ -64,6 +32,7 @@
                       <p>
                         {{ item.description }}
                       </p>
+                      <h6> <strong>Calories : {{ item.calories }}</strong></h6>
                       <div class="options">
                         <h6 class="price">${{ item.price }}</h6>
                         <div class="icons">
@@ -86,9 +55,6 @@
               </div>
             </ng-container>
           </div>
-        </div>
-        <div class="btn-box">
-          <a> View More </a>
         </div>
       </div>
     </section>

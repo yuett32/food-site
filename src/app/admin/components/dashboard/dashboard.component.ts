@@ -7,11 +7,7 @@ import { MainService } from 'src/app/shared/services/main.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  orders = [
-    { id: 1, customer: 'John Doe', date: new Date(), status: 'Completed', total: 120.00 },
-    { id: 2, customer: 'Jane Smith', date: new Date(), status: 'Pending', total: 75.50 },
-    // Add more orders here
-  ];
+  orders:any = [];
   deliveryStatuses = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
   constructor(private mainService : MainService) {}
   ngOnInit(): void {
@@ -20,7 +16,10 @@ export class DashboardComponent implements OnInit {
 
   getAllOrders() {
     this.mainService.getAllOrders().subscribe((res:any)=>{
-
+      this.orders = res.map((item: any) => {
+        item.date = item.date.toDate(); // Convert Firestore Timestamp to Date
+        return item;
+      });
     })
   }
   onStatusChange(order: any) {
