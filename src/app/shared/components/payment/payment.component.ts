@@ -40,7 +40,7 @@ export class PaymentComponent {
   }
 
   async pay() {
-    const response = await this.paymentService.createPaymentIntent(this.totalAmount).toPromise();
+    const response = await this.paymentService.createPaymentIntent(this.totalAmount + 100).toPromise();
     if (response && response.clientSecret) {
       const result = await this.stripe!.confirmCardPayment(response.clientSecret, {
         payment_method: {
