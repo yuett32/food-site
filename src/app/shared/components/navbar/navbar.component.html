@@ -2,7 +2,7 @@
   <img src="assets/logo.png" alt="Logo" class="logo" />
   <nav class="nav">
     <ul>
-      <ng-container *ngIf="!isAdmin">
+      <ng-container *ngIf="!isAdmin && !isEmployee">
         <li><a [routerLink]="['/home']">Home</a></li>
         <li><a [routerLink]="['/home/menu']">Menu</a></li>
         <li><a [routerLink]="['/home/about']">About</a></li>
@@ -22,6 +22,9 @@
         <li><a [routerLink]="['/admin/home']">Admin Dashboard</a></li>
         <li><a [routerLink]="['/admin/product']">All Products</a></li>
         <li><a [routerLink]="['/admin/employee']">Manage Employee</a></li>
+      </ng-container>
+      <ng-container *ngIf="isEmployee">
+        <li><a [routerLink]="['/employee']">Employee Dashboard</a></li>
       </ng-container>
       <li>
         <a (click)="logout()"> Logout</a>

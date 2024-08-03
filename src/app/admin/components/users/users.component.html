@@ -1,1 +1,25 @@
-<p>users works!</p>
+<div class="image-container">
+    <app-navbar [isAdmin] = "true"></app-navbar>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{ user.displayName }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>
+                    <button *ngIf="!user.accountActivated" class="btn btn-primary" (click)="approveUser(user.id,true)">Activate</button>
+                    <button *ngIf="user.accountActivated" class="btn btn-warning" (click)="approveUser(user.id,false)">DeActivate</button>
+                    <button *ngIf="!user.accountActivated" class="btn btn-danger" style="margin-left: 10px;" (click)="deleteUser(user.id)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+        </table>
+      </div>
+</div>

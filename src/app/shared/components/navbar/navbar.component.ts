@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
   @Input() isMain : boolean = false; 
   @Input() isAdmin: boolean = false
   @Input() cartItemCount = 0;
+  @Input() isEmployee : boolean = false;
   userId:any;
   constructor(private mainService : MainService,private route: Router) {
     this.userId = localStorage.getItem('user_id');

@@ -159,8 +159,8 @@ placeOrder(addData: any) {
   });
 }
 
-deleteAllCartItems(id: string) {
-  return this.firestore.collection('cart', ref => ref.where('id', '==', id))
+deleteAllCartItems(userId: string) {
+  return this.firestore.collection('cart', ref => ref.where('userId', '==', userId))
     .get()
     .pipe(
       switchMap(snapshot => {
@@ -168,7 +168,7 @@ deleteAllCartItems(id: string) {
         snapshot.docs.forEach(doc => {
           batch.delete(doc.ref);
         });
-        return from(batch.commit());
+        return from(batch.commit()); // Convert promise to observable
       })
     );
 }
@@ -181,4 +181,29 @@ updateProfile(userId: string, updatedData: any) {
       console.error('Error updating Profile: ', error);
     });
 }
+getUsersWithAccountType(accountType: number): Observable<any[]> {
+  return this.firestore
+    .collection('users', ref => ref.where('accountType', '==', accountType))
+    .snapshotChanges()
+    .pipe(
+      map(actions => 
+        actions.map(action => {
+          const data = action.payload.doc.data() as any;
+          const id = action.payload.doc.id;
+          return { id, ...data };
+        })
+      )
+    );
+}
+
+deleteUser(userId: string): void {
+  this.firestore.doc(`users/${userId}`).delete();
+}
+approveUser(userId: string,action:boolean): void {
+  this.firestore.doc(`users/${userId}`).update({ accountActivated: action });
+}
+updateStatus(userId: string,action:string): void {
+  this.firestore.doc(`orders/${userId}`).update({ status: action });
+}
+
 }

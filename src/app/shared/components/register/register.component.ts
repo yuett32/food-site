@@ -33,7 +33,6 @@ export class RegisterComponent {
       lastName: ['', Validators.required],
       mobileNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      bmi: ['', Validators.required],
       password: ['', Validators.required]
     });
   }

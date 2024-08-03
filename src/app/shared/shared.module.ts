@@ -12,6 +12,7 @@ import { SearchPipe } from './pipe/search.pipe';
 import { PaymentComponent } from './components/payment/payment.component';
 import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EmployeeComponent } from './components/employee/employee.component';
 
 
 
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     SearchPipe,
     PaymentComponent,
     StripeCheckoutComponent,
+    EmployeeComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProfileComponent,
     ModalComponent,
     SearchPipe,
-    PaymentComponent
+    PaymentComponent,
+    EmployeeComponent
   ]
 })
 export class SharedModule { }

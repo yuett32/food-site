@@ -30,16 +30,23 @@ export class LoginComponent {
         this.firestore.collection('users').doc(userCredential.user.uid).get()
           .subscribe((doc:any) => {
             if (doc.exists) {
-              const accountType = doc.data().accountType;
+              if (doc.data().accountActivated) {
+                const accountType = doc.data().accountType;
               localStorage.setItem('authToken', userCredential.user.getIdToken());
               localStorage.setItem('user_id', userCredential.user.uid);
               this.toastr.success('Logged in Successfully.')
               localStorage.setItem('accountType', accountType);
               if (accountType == 1) {
                 this.route.navigate(['/admin']);
-              } else {
+              } else if (accountType == 2) {
+                this.route.navigate(['/employee']);
+              }
+              else {
                 this.route.navigate(['/home']);
               }
+              }
+              else this.toastr.info('Please contact admin for the Activation')
+              
             } else {
               console.log('User document does not exist');
               // Handle error here, e.g., show an error message to the user

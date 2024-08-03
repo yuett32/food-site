@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MainService } from 'src/app/shared/services/main.service';
+import { Component } from '@angular/core';
+import { MainService } from '../../services/main.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-employee',
+  templateUrl: './employee.component.html',
+  styleUrls: ['./employee.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class EmployeeComponent {
   orders:any = [];
   deliveryStatuses = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
   constructor(private mainService : MainService) {}
@@ -25,7 +25,5 @@ export class DashboardComponent implements OnInit {
   onStatusChange(order: any) {
     // Handle the status change logic here
     this.mainService.updateStatus(order.id,order.status)
-    console.log(`Order ID: ${order.id}, New Status: ${order.status}`);
-    // You can also update the order status in your backend/database if necessary
   }
 }

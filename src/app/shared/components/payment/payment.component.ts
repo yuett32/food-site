@@ -100,13 +100,20 @@ export class PaymentComponent {
     let payload = {
       customer_name: this.userinfo.displayName,
       order: this.cartItems,
-      status: 'pending',
+      status: 'Pending',
       date: new Date(),
       amount: this.totalAmount,
       location: localStorage.getItem('location')
     };
     this.mainService.placeOrder(payload);
     let user_id = localStorage.getItem('user_id') as any;
-    this.mainService.deleteAllCartItems(user_id);
+    this.clearCart(user_id)
+  }
+  clearCart(userId: string): void {
+    this.mainService.deleteAllCartItems(userId).subscribe(() => {
+      console.log('All cart items deleted for user:', userId);
+    }, error => {
+      console.error('Error deleting cart items:', error);
+    });
   }
 }
