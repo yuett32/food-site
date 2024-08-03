@@ -10,7 +10,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SearchPipe } from './pipe/search.pipe';
 import { PaymentComponent } from './components/payment/payment.component';
-import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeComponent } from './components/employee/employee.component';
 
@@ -26,7 +25,6 @@ import { EmployeeComponent } from './components/employee/employee.component';
     ModalComponent,
     SearchPipe,
     PaymentComponent,
-    StripeCheckoutComponent,
     EmployeeComponent,
   ],
   imports: [
