@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header text-center bg-primary text-white">
+          <h2>Track Your Orders</h2>
+        </div>
+        <div *ngIf="!isLoading; else loading">
+          <ng-container *ngIf="orders.length > 0; else noOrders">
+            <ng-container *ngFor="let order of orders; let i = index">
+              <div class="order-container">
+                <div class="card-body text-center">
+                  <h4>Order ID: {{ i + 1 }}</h4>
+                  <div class="d-flex justify-content-center align-items-center mt-3">
+                    <p class="mb-0 mr-2">Your order status is:</p>
+                    <span
+                      [ngClass]="{
+                        'badge badge-success': order.status === 'Delivered',
+                        'badge badge-warning': order.status === 'Shipped',
+                        'badge badge-secondary': order.status === 'Pending',
+                        'badge badge-danger': order.status === 'Cancelled'
+                      }"
+                      class="status-badge"
+                    >
+                      {{ order.status }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+          <ng-template #noOrders>
+            <div class="card-body text-center">
+              <p>No orders found.</p>
+            </div>
+          </ng-template>
+        </div>
+        <ng-template #loading>
+          <div class="card-body text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
