@@ -98,6 +98,7 @@ export class PaymentComponent {
 
   placeOrder() {
     let payload = {
+      userId: localStorage.getItem('user_id'),
       customer_name: this.userinfo.displayName,
       order: this.cartItems,
       status: 'Pending',
