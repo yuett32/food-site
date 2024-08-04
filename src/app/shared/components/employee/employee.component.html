@@ -10,6 +10,7 @@
               <th>Delivery Status</th>
               <th>Payment Status</th>
               <th>Total Amount</th>
+              <th>Order Details</th>
             </tr>
           </thead>
           <tbody>
@@ -26,6 +27,7 @@
               </td>
               <td>{{ order.status }}</td>
               <td>${{ order.amount }}</td>
+              <td>{{getProductTitlesAndQuantities(order.order)}}</td>
             </tr>
           </tbody>
         </table>
