@@ -28,4 +28,10 @@ export class DashboardComponent implements OnInit {
     console.log(`Order ID: ${order.id}, New Status: ${order.status}`);
     // You can also update the order status in your backend/database if necessary
   }
+  getProductTitlesAndQuantities(products:any) {
+    return products.map((product:any) => {
+        const { productTitle, quantity } = product;
+        return `Product Title: ${productTitle}, Quantity: ${quantity}`;
+    });
+}
 }
