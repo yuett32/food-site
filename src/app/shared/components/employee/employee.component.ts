@@ -26,4 +26,11 @@ export class EmployeeComponent {
     // Handle the status change logic here
     this.mainService.updateStatus(order.id,order.status)
   }
+
+  getProductTitlesAndQuantities(products:any) {
+    return products.map((product:any) => {
+        const { productTitle, quantity } = product;
+        return `Product Title: ${productTitle}, Quantity: ${quantity}`;
+    });
+}
 }
