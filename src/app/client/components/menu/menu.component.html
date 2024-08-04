@@ -31,9 +31,10 @@
                       {{ item.description }}
                     </p>
                     <h6> <strong>Calories : {{ item.calories }}</strong></h6>
+                    <h6> <strong>Available : {{ item.available ? 'Yes' : 'No' }}</strong></h6>
                     <div class="options">
                       <h6>${{ item.price }}</h6>
-                      <a (click)="addToCart(item)">
+                      <a (click)="addToCart(item)" [ngClass]="{'disable': !item.available}">
                         <svg
                           version="1.1"
                           id="Capa_1"
