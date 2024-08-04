@@ -8,6 +8,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { SharedModule } from '../shared/shared.module';
 import { CartComponent } from './components/cart/cart.component';
 import { FormsModule } from '@angular/forms';
+import { TrackOrderComponent } from './components/track-order/track-order.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     MainComponent,
     AboutComponent,
     MenuComponent,
-    CartComponent
+    CartComponent,
+    TrackOrderComponent
   ],
   imports: [
     CommonModule,
