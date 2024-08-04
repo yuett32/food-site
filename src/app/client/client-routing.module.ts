@@ -6,6 +6,7 @@ import { AboutComponent } from './components/about/about.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProfileComponent } from '../shared/components/profile/profile.component';
 import { PaymentComponent } from '../shared/components/payment/payment.component';
+import { TrackOrderComponent } from './components/track-order/track-order.component';
 
 const routes: Routes = [
   {path:'', component: MainComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path:'about', component: AboutComponent},
   {path:'profile', component: ProfileComponent},
   {path:'cart', component: CartComponent},
+  {path:'order', component: TrackOrderComponent},
 ];
 
 @NgModule({
