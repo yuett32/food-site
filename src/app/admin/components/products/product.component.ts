@@ -30,6 +30,7 @@ export class ProductComponent implements OnInit{
       price: ['', Validators.required],
       calories: ['', Validators.required],
       description: ['', Validators.required],
+      available: ['', Validators.required],
     });
   }
   ngOnInit(): void {
@@ -90,6 +91,7 @@ export class ProductComponent implements OnInit{
     calories: formData.calories,
     productImage: formData.productImage,
     date: new Date(),
+    available: formData.available
   };
   if (this.formData?.id) {
     this.mainService.updateProduct(this.formData.id,lesson);
