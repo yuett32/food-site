@@ -205,5 +205,8 @@ approveUser(userId: string,action:boolean): void {
 updateStatus(userId: string,action:string): void {
   this.firestore.doc(`orders/${userId}`).update({ status: action });
 }
+getOrdersByUserId(userId: string): Observable<any[]> {
+  return this.firestore.collection('orders', ref => ref.where('userId', '==', userId)).valueChanges();
+}
 
 }
