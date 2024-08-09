@@ -11,7 +11,6 @@ import { MainService } from 'src/app/shared/services/main.service';
 export class CartComponent implements OnInit{
   cartItems:any = [];
   totalAmount:any;
-  location:any;
   constructor(private mainService: MainService,private route:Router, private toastr: ToastrService){}
   ngOnInit(): void {
     this.getAllItems()
@@ -63,12 +62,11 @@ export class CartComponent implements OnInit{
     return price * quantity;
   }
   checkout(){
-    if (this.location) {
-      localStorage.setItem('location',this.location);
+    if (this.cartItems.length > 0) {
       this.route.navigateByUrl('/home/checkout')
     }
     else {
-      this.toastr.info('Please enter the location first.')
+      this.toastr.info('Please add items in the cart first.')
     }
   }
 }

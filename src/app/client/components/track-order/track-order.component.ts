@@ -25,7 +25,12 @@ export class TrackOrderComponent {
     this.isLoading = true;
     let user_id = localStorage.getItem('user_id') as any;
     this.mainService.getOrdersByUserId(user_id).subscribe((order:any) => {
-      this.orders = order
+      this.orders = order;
+      this.orders.sort((a:any, b:any) => {
+        const dateA = a.date.seconds * 1000 + a.date.nanoseconds / 1000000;
+        const dateB = b.date.seconds * 1000 + b.date.nanoseconds / 1000000;
+        return dateB - dateA; // For descending order
+      });
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

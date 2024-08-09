@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit{
   userInfo:any = {};
   user_id:any;
   selectedFileUrl: any;
+  bmi:any
+  bmiCategory : any
   constructor(private route: Router,private toastr:ToastrService,private cdr: ChangeDetectorRef, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,private mainService: MainService) {
     this.profileForm = this.fb.group({
       first_name: ['', Validators.required],
@@ -28,6 +30,8 @@ export class ProfileComponent implements OnInit{
       mobile_number: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       bmi: ['', Validators.required],
+      height : ['',Validators.required],
+      weight : ['',Validators.required]
     });
   }
   ngOnInit(): void {
@@ -47,6 +51,8 @@ export class ProfileComponent implements OnInit{
       this.userInfo = res
       this.profileForm.patchValue(res);
       this.downloadURL = res.photoURL;
+      this.bmi = res.bmi;
+      this.bmiCategory = this.getBMICategory(this.bmi);
     })
   }
 
@@ -98,8 +104,10 @@ export class ProfileComponent implements OnInit{
     first_name: formData.first_name,
     last_name: formData.last_name,
     mobile_number: formData.mobile_number, 
-    bmi: formData.bmi, 
+    bmi: this.bmi, 
     photoURL: formData.photoURL,
+    height: formData.height,
+    weight: formData.weight,
   };
   if (this.userInfo.id) {
     this.mainService.updateProfile(this.userInfo.id,userData);
@@ -107,6 +115,28 @@ export class ProfileComponent implements OnInit{
   }
   this.route.navigateByUrl('/home')
   
+}
+calculateBMI(): void {
+  if (this.profileForm.value.weight && this.profileForm.value.height) {
+    this.bmi = this.profileForm.value.weight / (this.profileForm.value.height * this.profileForm.value.height);
+    this.bmiCategory = this.getBMICategory(this.bmi);
+  }
+  else {
+    this.bmi = '';
+    this.bmiCategory = ''
+  }
+}
+
+getBMICategory(bmi: number): string {
+  if (bmi < 18.5) {
+    return 'Underweight';
+  } else if (bmi >= 18.5 && bmi < 24.9) {
+    return 'Normal weight';
+  } else if (bmi >= 25 && bmi < 29.9) {
+    return 'Overweight';
+  } else {
+    return 'Obesity';
+  }
 }
 }
 

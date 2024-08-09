@@ -17,15 +17,16 @@ export class RegisterComponent {
   selectedFile: File | null = null;
   downloadURL: string | null = null;
   accountType:any = 3;
-
-  
+  bmi:any
+  bmiCategory : any
   constructor(private route: Router, private fb: FormBuilder,private storage: AngularFireStorage,public angularFireAuth: AngularFireAuth,private firestore: AngularFirestore, private toastr: ToastrService) {
     this.clientForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       mobileNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      bmi: ['', Validators.required],
+      weight: ['', Validators.required],
+      height: ['', Validators.required],
       password: ['', Validators.required]
     });
     this.employeeForm = this.fb.group({
@@ -95,7 +96,9 @@ export class RegisterComponent {
      first_name: formData.firstName,
      last_name: formData.lastName,
      mobile_number: formData.mobileNumber, 
-     bmi: this.accountType == 3 ? formData.bmi : 0, 
+     bmi: this.accountType == 3 ? this.bmi : 0, 
+     weight: this.accountType == 3 ? formData.weight : 0, 
+     height: this.accountType == 3 ? formData.height : 0, 
      photoURL: formData.imageUrl,
      emailVerified: user.emailVerified,
      accountType: this.accountType,
@@ -105,4 +108,27 @@ export class RegisterComponent {
      merge: true,
    });
  }
+
+ calculateBMI(): void {
+  if (this.clientForm.value.weight && this.clientForm.value.height) {
+    this.bmi = this.clientForm.value.weight / (this.clientForm.value.height * this.clientForm.value.height);
+    this.bmiCategory = this.getBMICategory(this.bmi);
+  }
+  else {
+    this.bmi = '';
+    this.bmiCategory = ''
+  }
+}
+
+getBMICategory(bmi: number): string {
+  if (bmi < 18.5) {
+    return 'Underweight';
+  } else if (bmi >= 18.5 && bmi < 24.9) {
+    return 'Normal weight';
+  } else if (bmi >= 25 && bmi < 29.9) {
+    return 'Overweight';
+  } else {
+    return 'Obesity';
+  }
+}
 }

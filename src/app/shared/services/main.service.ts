@@ -54,7 +54,7 @@ export class MainService {
   }
 
   getAllOrders(): Observable<any[]> {
-    return this.firestore.collection('orders').snapshotChanges().pipe(
+    return this.firestore.collection('orders', ref => ref.orderBy('date', 'desc')).snapshotChanges().pipe(
       map(actions => actions.map(action => {
         const data = action.payload.doc.data() as any; // Ensure data is cast as 'any'
         const id = action.payload.doc.id;
@@ -62,7 +62,7 @@ export class MainService {
       }))
     );
   }
-
+  
 getAllCartItems(userId: string): Observable<any[]> {
     return this.firestore.collection('cart', ref => ref.where('userId', '==', userId)).snapshotChanges().pipe(
       map(actions => actions.map(action => {

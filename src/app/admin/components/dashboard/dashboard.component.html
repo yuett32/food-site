@@ -11,6 +11,7 @@
               <th>Payment Status</th>
               <th>Total Amount</th>
               <th>Order Details</th>
+              <th>Address</th>
             </tr>
           </thead>
           <tbody>
@@ -25,9 +26,15 @@
                   </option>
                 </select>
               </td>
-              <td>{{ order.status }}</td>
+              <td>{{ order?.paymentStatus ? 'Paid' : 'Cash On Delivery' }}</td>
               <td>${{ order.amount }}</td>
               <td>{{getProductTitlesAndQuantities(order.order)}}</td>
+              <td><p>
+                {{ order?.address?.company }}, 
+                {{ order?.address?.address }}, 
+                {{ order?.address?.building }}, 
+                {{ order?.address?.unit }}
+              </p></td>
             </tr>
           </tbody>
         </table>

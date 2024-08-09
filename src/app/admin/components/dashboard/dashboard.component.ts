@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
         item.date = item.date.toDate(); // Convert Firestore Timestamp to Date
         return item;
       });
+      console.log(this.orders)
     })
   }
   onStatusChange(order: any) {

@@ -6,6 +6,13 @@
       <div class="heading_container heading_center">
         <h2>Our Menu</h2>
       </div>
+      <ul class="filters_menu">
+        <li [ngClass]="{'active': filter == 'all'}" (click)="filterItem('all');">All</li>
+        <li [ngClass]="{'active': filter == 'Soups'}" (click)="filterItem('Soups');">Soups</li>
+        <li [ngClass]="{'active': filter == 'Pizza'}" (click)="filterItem('Pizza');">Pizza</li>
+        <li [ngClass]="{'active': filter == 'Pasta'}" (click)="filterItem('Pasta');">Pasta</li>
+        <li [ngClass]="{'active': filter == 'Fries'}" (click)="filterItem('Fries');">Fries</li>
+      </ul>
       <div class="search-container">
         <input
           class="form-control"
@@ -31,10 +38,10 @@
                       {{ item.description }}
                     </p>
                     <h6> <strong>Calories : {{ item.calories }}</strong></h6>
-                    <h6> <strong>Available : {{ item.available ? 'Yes' : 'No' }}</strong></h6>
+                    <h6> <strong>Available : {{ item.available == 'true' ? 'Yes' : 'No' }}</strong></h6>
                     <div class="options">
                       <h6>${{ item.price }}</h6>
-                      <a (click)="addToCart(item)" [ngClass]="{'disable': !item.available}">
+                      <a (click)="addToCart(item)" [ngClass]="{'disable': item.available != 'true'}">
                         <svg
                           version="1.1"
                           id="Capa_1"

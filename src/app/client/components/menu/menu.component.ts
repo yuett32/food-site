@@ -21,8 +21,13 @@ export class MenuComponent implements OnInit{
   ngOnInit(): void {
     this.getAllProducts()
   }
-  filterItem(){
-    // this.foodItem = this.allfoodItem.filter((item:any) => item.categories == this.filter)
+  filterItem(filter :any){
+    this.filter = filter
+    if (this.filter == 'all') {
+      this.foodItem = this.allfoodItem
+    }
+    else
+      this.foodItem = this.allfoodItem.filter((item:any) => item.category == this.filter)
   }
   addToCart(item:any) {
 
@@ -37,6 +42,7 @@ export class MenuComponent implements OnInit{
   getAllProducts() {
     this.mainService.getAllProducts().subscribe((res:any) =>{
       console.log(res)
+      this.allfoodItem = res;
       this.foodItem = res;
     })
   }

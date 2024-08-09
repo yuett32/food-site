@@ -1,13 +1,113 @@
-<div class="payment-container">
-  <form (submit)="pay()">
+<div class="delivery-address-container">
+  <h2 style="text-align: center;">Shipping information</h2>
+  <div class="address-info mt-1">
+    <h3>{{addressType == 'Home' ? '🏠 ': addressType == 'Work' ? '🏢' : addressType == 'Partner' ? '❤️' : '➕'}} Marsiling Gardens, 8 Marsiling Dr</h3>
+  </div>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <h5>Total Amount: {{ totalAmount }}</h5>
+      <label>Name</label>
+      <input type="text" placeholder="Name" formControlName="name" required />
     </div>
     <div class="form-group">
-      <div id="card-element"><!-- Stripe.js will inject the card element here --></div>
+      <label>Email</label>
+      <input type="email" placeholder="Email" formControlName="email" required />
     </div>
     <div class="form-group">
-      <button type="submit">Pay</button>
+      <label for="building">Building</label>
+      <input id="building" formControlName="building" type="text">
     </div>
+    <div class="form-group">
+      <label for="unit">Floor / unit number</label>
+      <input id="unit" formControlName="unit" type="text">
+    </div>
+    <div class="form-group">
+      <label for="company">Company Name</label>
+      <input id="company" formControlName="company" type="text">
+    </div>
+    <div class="form-group">
+      <label for="note">Note to rider - e.g. building, landmark</label>
+      <textarea id="note" formControlName="address"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Add a Label</label>
+      <div class="labels">
+        <button type="button" [ngClass]="{'btn_active': addressType == 'Home'}" (click)="addressType = 'Home'">🏠 Home</button>
+        <button type="button" [ngClass]="{'btn_active': addressType == 'Work'}"(click)="addressType = 'Work'">🏢 Work</button>
+        <button type="button" [ngClass]="{'btn_active': addressType == 'Partner'}" (click)="addressType = 'Partner'">❤️ Partner</button>
+        <button type="button" [ngClass]="{'btn_active': addressType == 'Other'}" (click)="addressType = 'Other'">➕ Other</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <div class="payment-methods">
+        <button type="button" (click)="setPaymentMethod('Card')" [ngClass]="{'btn1_active': paymentMethod == 'Card'}">💳 Card</button>
+        <button type="button" (click)="setPaymentMethod('COD')" [ngClass]="{'btn1_active': paymentMethod == 'COD'}">💵 Cash on Delivery</button>
+      </div>
+    </div>
+    <div *ngIf="paymentMethod === 'Card'" class="form-group">
+      <h5>Payment details</h5>
+      <div id="card-element">
+        <div id="card-number-element"></div>
+        <div id="card-expiry-element"></div>
+        <div id="card-cvc-element"></div>
+      </div>
+    </div>
+    <button type="submit" class="submit-button" (click)="pay()">Pay {{ totalAmount | currency }}</button>
   </form>
 </div>
+
+
+<!-- <div class="payment-container">
+  <form [formGroup]="paymentForm" class="checkout-form" (ngSubmit)="pay()">
+    <div class="form-group">
+      <h5>Shipping information</h5>
+      <input type="email" placeholder="Email" formControlName="email" required />
+      <div class="shipping-address">
+        <input type="text" placeholder="Name" formControlName="name" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <h5>Payment details</h5>
+      <div id="card-element">
+        <div id="card-number-element"></div>
+        <div id="card-expiry-element"></div>
+        <div id="card-cvc-element"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit">Pay {{ totalAmount | currency }}</button>
+    </div>
+  </form>
+</div> -->
+
+<!-- <div class="payment-container">
+  <form class="checkout-form" (submit)="pay()">
+    <div class="form-group">
+      <h5>Shipping information</h5>
+      <input type="email" placeholder="Email" formControlName="email" required />
+      <div class="shipping-address">
+        <select formControlName="country">
+          <option value="United States">United States</option>
+
+        </select>
+        <input type="text" placeholder="Name" formControlName="name" required />
+        <input type="text" placeholder="Address" formControlName="address" required />
+        <a href="#">Enter address manually</a>
+      </div>
+    </div>
+    <div class="form-group">
+      <h5>Payment details</h5>
+      <div id="card-element"></div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" formControlName="billingSameAsShipping" />
+          Billing address is same as shipping
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit">Pay {{ totalAmount | currency }}</button>
+    </div>
+  </form>
+</div> -->
+
