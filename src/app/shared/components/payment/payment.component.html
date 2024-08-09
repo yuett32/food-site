@@ -44,7 +44,7 @@
         <button type="button" (click)="setPaymentMethod('COD')" [ngClass]="{'btn1_active': paymentMethod == 'COD'}">💵 Cash on Delivery</button>
       </div>
     </div>
-    <div *ngIf="paymentMethod === 'Card'" class="form-group">
+    <div [ngClass]="{'payment-disable' : paymentMethod != 'Card' , 'payment-enable' : paymentMethod === 'Card' }" class="form-group">
       <h5>Payment details</h5>
       <div id="card-element">
         <div id="card-number-element"></div>
