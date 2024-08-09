@@ -32,6 +32,7 @@ export class MainComponent {
       this.foodItem = res;
     })
   }
+
   deleteProduct(item:any) {
     const initialState = {
       itemId : item.id
