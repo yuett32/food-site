@@ -73,10 +73,6 @@ export class PaymentComponent implements OnInit {
             billing_details: {
               name: this.paymentForm.value.name,
               email: this.paymentForm.value.email,
-              address: {
-                line1: this.paymentForm.value.address,
-                country: this.paymentForm.value.country,
-              }
             }
           }
         });
