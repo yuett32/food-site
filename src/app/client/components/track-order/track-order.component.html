@@ -17,9 +17,9 @@
                     <span
                       [ngClass]="{
                         'badge badge-success': order.status === 'Delivered',
-                        'badge badge-warning': order.status === 'Shipped',
-                        'badge badge-secondary': order.status === 'Pending',
-                        'badge badge-danger': order.status === 'Cancelled'
+                        'badge badge-warning': order.status === 'On the way',
+                        'badge badge-secondary': order.status === 'Food preparing',
+                        'badge badge-danger': order.status === 'Order Cancelled'
                       }"
                       class="status-badge"
                     >
