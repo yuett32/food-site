@@ -7,11 +7,13 @@
         <h2>Our Menu</h2>
       </div>
       <ul class="filters_menu">
-        <li [ngClass]="{'active': filter == 'all'}" (click)="filterItem('all');">All</li>
-        <li [ngClass]="{'active': filter == 'Soups'}" (click)="filterItem('Soups');">Soups</li>
-        <li [ngClass]="{'active': filter == 'Pizza'}" (click)="filterItem('Pizza');">Pizza</li>
-        <li [ngClass]="{'active': filter == 'Pasta'}" (click)="filterItem('Pasta');">Pasta</li>
-        <li [ngClass]="{'active': filter == 'Fries'}" (click)="filterItem('Fries');">Fries</li>
+        <li [ngClass]="{'active': filter == 'All'}" (click)="filterItem('All');">All</li>
+        <li [ngClass]="{'active': filter == 'Appetizers'}" (click)="filterItem('Appetizers');">Appetizers</li>
+        <li [ngClass]="{'active': filter == 'Salad'}" (click)="filterItem('Salad');">Salad</li>
+        <li [ngClass]="{'active': filter == 'Mains'}" (click)="filterItem('Mains');">Mains</li>
+        <li [ngClass]="{'active': filter == 'Soup'}" (click)="filterItem('Soup');">Soup</li>
+        <li [ngClass]="{'active': filter == 'Drinks'}" (click)="filterItem('Drinks');">Drinks</li>
+        <li [ngClass]="{'active': filter == 'Desert'}" (click)="filterItem('Desert');">Desert</li>
       </ul>
       <div class="search-container">
         <input
