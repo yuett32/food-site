@@ -8,7 +8,7 @@ import { MainService } from 'src/app/shared/services/main.service';
 })
 export class DashboardComponent implements OnInit {
   orders:any = [];
-  deliveryStatuses = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
+  deliveryStatuses = ['Delivered', 'On the way', 'Food preparing', 'Order Cancelled'];
   constructor(private mainService : MainService) {}
   ngOnInit(): void {
     this.getAllOrders()
