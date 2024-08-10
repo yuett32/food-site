@@ -138,7 +138,7 @@ export class PaymentComponent implements OnInit {
       customer_name: this.paymentForm.value.name,
       email: this.paymentForm.value.email,
       order: this.cartItems,
-      status: 'Pending',
+      status: 'Food preparing',
       date: new Date(),
       amount: this.totalAmount,
       location: localStorage.getItem('location'),
