@@ -8,7 +8,7 @@ import { MainService } from '../../services/main.service';
 })
 export class EmployeeComponent {
   orders:any = [];
-  deliveryStatuses = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
+  deliveryStatuses = ['Delivered', 'On the way', 'Food preparing', 'Order Cancelled'];
   constructor(private mainService : MainService) {}
   ngOnInit(): void {
     this.getAllOrders()
