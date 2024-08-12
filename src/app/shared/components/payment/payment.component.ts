@@ -38,9 +38,10 @@ export class PaymentComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]], // Add Validators
       building: ['', Validators.required],
       unit: ['', Validators.required],
-      company: ['United States', Validators.required],
+      company: ['', Validators.required],
       address: ['', [Validators.required]],
-      country: ['Singapore']
+      country: ['Singapore'],
+      postalCode: ['', [Validators.required]]
     });
   }
 
@@ -144,10 +145,12 @@ export class PaymentComponent implements OnInit {
       location: localStorage.getItem('location'),
       paymentStatus : paymentStatus,
       address: {
+          country: this.paymentForm.value.country,
           building: this.paymentForm.value.building,
           unit: this.paymentForm.value.unit,
           company: this.paymentForm.value.company,
           address: this.paymentForm.value.address,
+          postalCode : this.paymentForm.value.postalCode,
         }
     };
     this.mainService.placeOrder(payload);

@@ -30,6 +30,8 @@
               <td>${{ order.amount }}</td>
               <td>{{getProductTitlesAndQuantities(order.order)}}</td>
               <td><p>
+                {{ order?.address?.postalCode ? ('Postal Code:' + order?.address?.postalCode) : '' }}
+                {{ order?.address?.country }},
                 {{ order?.address?.company }}, 
                 {{ order?.address?.address }}, 
                 {{ order?.address?.building }}, 
